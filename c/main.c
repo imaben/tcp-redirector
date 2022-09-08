@@ -246,12 +246,12 @@ int new_redirector(struct redirect_info *info) {
     ri->fd = fd;
     ri->info = *info;
     INIT_LIST_HEAD(&ri->sessions);
-    list_add_tail(&ri->link, &redirector_list);
     if (aeCreateFileEvent(el, fd, AE_READABLE, accept_handler, ri) < 0) {
         fprintf(stderr, "failed to create event, errno:%d\n", errno);
         free(ri);
         return -1;
     }
+    list_add_tail(&ri->link, &redirector_list);
     return 0;
 }
 
